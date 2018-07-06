@@ -1,0 +1,60 @@
+<html ng-app="actorApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+    <script src="actorApp.js"></script>
+    <script src="actorCtrl.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="fixed-top row justify-content-center">
+            <div class="text-center ">
+                <h1 class="bg-warning text-center d-inline-block">
+                    <span class="text-primary">Beautiful</span> and
+                    <span class="text-danger">Sexiest</span> Actresses</h1>
+            </div>
+        </div>
+        <div ng-controller="actorCtrl">
+            <div class="input-group mb-5 mt-5">
+                <input type="text" class="bg-info text-dark form-control" placeholder="Search Actress" ng-model="aFilter">
+                <!-- <label for="orderby">Order By:</label> -->
+            </div>
+            <div class="input-group mb-5 mt-5">
+                <label class="bg-dark text-white form-control" for="orderby">Choose field to order by:</label>
+                <select class="bg-info text-dark form-control" name="orderby" ng-model="selectedName" ng-options="x for (x,y) in fields"
+                    ng-change="changeOrderBy(selectedName)">
+                </select>
+                <!-- <p>{{selectedName}}</p> -->
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-3 d-flex align-items-stretch mb-2" ng-repeat="actor in actorArr | filter : actorFilter | orderBy: propName : reverse">
+                    <div class="card" ng-class="{'card-selected' : actor === chosenActor}" ng-mouseover="updateOverClass(actor)" ng-mouseleave="updateMouseLeave(actor)">
+                        <img alt="Card image cap " class="card-img-top img-fluid" ng-src={{actor.imgUrl}}>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <span ng-click="changeOrderBy('fname')">{{actor.fname+ " "}}</span>
+                                <span ng-click="changeOrderBy('lname')">{{actor.lname}}</span>
+                            </h4>
+                            <h5 ng-click="changeOrderBy('bday')"> Birthday {{actor.bday | date : dd.MM.y}}</h5>
+                            <a ng-href={{actor.imdbUrl}} target="new">IMDB CARD</a>
+                            <p class="card-text">{{actor.text}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-dark text-white text-center pt-2 pb-2">by
+        <span class="text-primary">Yossi Glick</span>
+    </footer>
+</body>
+
+</html>
