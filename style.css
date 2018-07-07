@@ -56,6 +56,16 @@
         orphans: 1;
         widows: 1;
     }
+
+    #the-header {
+        font-size: 21px;
+        width: 100%;
+    }
+
+    #search-label {
+        font-size: 10px;
+        padding-top: 10px;
+    }
 }
 
 body {
