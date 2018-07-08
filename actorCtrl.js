@@ -68,14 +68,14 @@ $scope.updateMouseLeave = function (actor) {
     $scope.chosenActor = actor;
 }
 
-$scope.listItems = {};
+$scope.actressList = {};
 
 
 $scope.searchActress = function(input) {
 
     if (input)
     {
-        $scope.listItems = {};
+        $scope.actressList = {};
         var namesUrl = "https://api.themoviedb.org/3/search/person?api_key=" + API_KEY + "&language=en-US&query="+ input + "&page=1&include_adult=false"
         
         $http.get(namesUrl).then ( function (response) {
@@ -86,19 +86,19 @@ $scope.searchActress = function(input) {
 
                 $http.get(detailsUrl).then (function(response1) {
                     if (response1.data.gender === 1)
-                        $scope.listItems[response1.data.name] = response1.data.id;
+                        $scope.actressList[response1.data.name] = response1.data.id;
                 }, function (error) {
                     console.log(error);
                 })
             }
         }, function(error) {
             console.log(error);
-            $scope.listItems = {};
+            $scope.actressList = {};
         })
     }
     else
     {
-        $scope.listItems = {};
+        $scope.actressList = {};
     }
 }
 
