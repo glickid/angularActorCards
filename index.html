@@ -10,6 +10,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
     <script src="actorApp.js"></script>
     <script src="actorCtrl.js"></script>
+    <script src="moviesCtrl.js"></script>
+    <script src="movieDrective.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -31,6 +33,7 @@
                 <label id="search-label" class="bg-dark text-white form-control" for="orderby">Choose field to order by:</label>
                 <select class="bg-info text-dark form-control" name="orderby" ng-model="selectedName" ng-options="x for (x,y) in fields"
                     ng-change="changeOrderBy(selectedName)">
+                    <option></option>
                 </select>
                 <!-- <p>{{selectedName}}</p> -->
             </div>
@@ -50,6 +53,21 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="text-center ">
+                <h1 id="the-header" class="bg-warning text-center d-inline-block">
+                    The
+                    <span class="text-danger">MOVIES</span> Album</h1>
+            </div>
+        </div>
+        <div ng-controller="moviesCtrl">
+            <ul class="list-unstyled" ng-repeat="movie in moviesArr track by $index">
+                <yg-movie></yg-movie>
+            </ul>
         </div>
     </div>
     <footer class="bg-dark text-white text-center pt-2 pb-2">by

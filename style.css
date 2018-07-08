@@ -74,3 +74,7 @@ body {
     /* background-size: 85% 90%; */
     background-position: top center; 
 }
+
+#inner_ul {
+    list-style-type: none;
+}
