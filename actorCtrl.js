@@ -114,6 +114,7 @@ actorApp.controller("actorCtrl", function ($scope, $http) {
 
             $scope.actorArr.push(actress);
 
+            $scope.actressList = {};
         }, function (error) {
             console.log(error);
         })
