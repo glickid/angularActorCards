@@ -51,16 +51,21 @@ actorApp.controller("moviesCtrl", function ($scope, $http) {
         if (id != 0) {
             $scope.listItems = {};
             var theUrl = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + API_KEY + "&append_to_response=credits";
-            
+
             $http.get(theUrl).then(function (response) {
                 var actors = [];
                 var director = "";
+                var actorNum = (response.data.credits.cast.length>5) ? 5 : response.data.credits.cast.length;
 
-                for (var i = 0; i < 3; i++)
-                    actors.push(response.data.credits.cast[i].name)
-                for (var i = 0; i < response.data.credits.crew.length; i++) {
-                    if (response.data.credits.crew[0].job === "Director")
-                        director = response.data.credits.crew[0].name;
+                for (var i = 0; i < actorNum; i++)
+                {
+                    actors.push(response.data.credits.cast[i].name);
+                }
+
+                for (var i = 0; i < response.data.credits.crew.length; i++) 
+                {
+                    if (response.data.credits.crew[i].job === "Director")
+                        director = response.data.credits.crew[i].name;
                 }
                 var aMovie = new Movie(response.data.title,
                     response.data.runtime,

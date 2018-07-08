@@ -4,7 +4,7 @@
         <a ng-href={{movie.imdbUrl}} target="new"><h5 class="mt-0 mb-1 mx-2">{{movie.name}}</h5></a>
         <ul id="inner_ul" class="d-flex list-group mx-2">
             <li>Length : {{movie.length}}</li>
-            <li>Actors: {{movie.actors[0]}}, {{movie.actors[1]}}</li>
+            <li>Actors: <span ng-repeat="actor in movie.actors">{{actor}} , </span></li>
             <li>Director: {{movie.director}}</li>
         </ul>
     </div>

@@ -26,9 +26,15 @@
         </div>
         <div ng-controller="actorCtrl">
             <div class="input-group mb-5 mt-5">
-                <input type="text" class="bg-info text-dark form-control" placeholder="Search Actress" ng-model="aFilter">
+                <input type="text" class="bg-info text-dark form-control" 
+                    placeholder="Search Actress in Gallery" ng-model="aFilter">
                 <!-- <label for="orderby">Order By:</label> -->
             </div>
+            <div class="input-group mb-5 mt-5">
+                    <input type="text" class="bg-info text-dark form-control" 
+                        placeholder="Search Actress in Gallery" ng-change="searchActress(input)">
+                    <!-- <label for="orderby">Order By:</label> -->
+                </div>
             <div class="input-group mb-5 mt-5">
                 <label id="search-label" class="bg-dark text-white form-control" for="orderby">Choose field to order by:</label>
                 <select class="bg-info text-dark form-control" name="orderby" ng-model="selectedName" ng-options="x for (x,y) in fields"
