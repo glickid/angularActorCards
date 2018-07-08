@@ -1,5 +1,6 @@
 
 actorApp.controller("actorCtrl", function ($scope, $http) {
+    var API_KEY = "bce8cf411be52423d49e88adaa634d4a";
 
     function Actor(fname, lname, bday, imageUrl, imdbUrl, text) {
         this.fname = fname;
@@ -65,6 +66,40 @@ $scope.updateOverClass = function (actor) {
 } 
 $scope.updateMouseLeave = function (actor) {
     $scope.chosenActor = actor;
+}
+
+$scope.listItems = {};
+
+
+$scope.searchActress = function(input) {
+
+    if (input)
+    {
+        $scope.listItems = {};
+        var namesUrl = "https://api.themoviedb.org/3/search/person?api_key=" + API_KEY + "&language=en-US&query="+ input + "&page=1&include_adult=false"
+        
+        $http.get(namesUrl).then ( function (response) {
+            for(i=0; i< response.data.results.length; i++)
+            {
+                var actorId = response.data.results[i].id;
+                var detailsUrl = " https://api.themoviedb.org/3/person/" + actorId + "?api_key=" + API_KEY + "&language=en-US";
+
+                $http.get(detailsUrl).then (function(response1) {
+                    if (response1.data.gender === 1)
+                        $scope.listItems[response1.data.name] = response1.data.id;
+                }, function (error) {
+                    console.log(error);
+                })
+            }
+        }, function(error) {
+            console.log(error);
+            $scope.listItems = {};
+        })
+    }
+    else
+    {
+        $scope.listItems = {};
+    }
 }
 
 
