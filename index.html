@@ -65,7 +65,17 @@
             </div>
         </div>
         <div ng-controller="moviesCtrl">
-            <ul class="list-unstyled" ng-repeat="movie in moviesArr track by $index">
+            <div class="input-group mt-5">
+                <input type="text" class="bg-info text-dark form-control" placeholder="Search movie" 
+                    ng-model="aFilter" on-change="updateSearch(afilter)">
+                <!-- <label for="orderby">Order By:</label> -->
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item">{{aFilter}}</li>
+                <li class="list-group-item">Second item</li>
+                <li class="list-group-item">Third item</li>
+            </ul>
+            <ul class="mt-5 list-unstyled" ng-repeat="movie in moviesArr track by $index">
                 <yg-movie></yg-movie>
             </ul>
         </div>
@@ -74,5 +84,4 @@
         <span class="text-primary">Yossi Glick</span>
     </footer>
 </body>
-
 </html>

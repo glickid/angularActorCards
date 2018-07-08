@@ -23,9 +23,8 @@ actorApp.controller("moviesCtrl", function ($scope, $http) {
 
     $scope.moviesArr.push(movie);
     $scope.moviesArr.push(movie);
-    // $scope.moviesArr.push(movie);
-    // $scope.moviesArr.push(movie);
-    // $scope.moviesArr.push(movie);
-    // $scope.moviesArr.push(movie);
-    // $scope.moviesArr.push(movie);
+   
+    $scope.updateSearch = function (aFilter) {
+        $scope = aFilter;
+    }
 });
