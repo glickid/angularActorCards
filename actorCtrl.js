@@ -23,10 +23,10 @@ actorApp.controller("actorCtrl", function ($scope, $http) {
                                     dataArr[i].imdbUrl,
                                     dataArr[i].text);
             $scope.actorArr.push(actor_t);
-            console.log(dataArr[i]);
+            // console.log(dataArr[i]);
         }
-    }, function (response){
-        console.log(JSON.stringify(response));
+    }, function (error){
+        console.log(JSON.stringify(error));
     });
 
 $scope.aFilter = "";
