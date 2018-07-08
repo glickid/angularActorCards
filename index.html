@@ -29,14 +29,13 @@
                 <input type="text" class="bg-info text-dark form-control" placeholder="Search Actress in Gallery" ng-model="aFilter">
                 <!-- <label for="orderby">Order By:</label> -->
             </div>
-            <div class="input-group mb-5 mt-5">
-                <input type="text" class="bg-info text-dark form-control" 
-                    placeholder="Search Actress in TMDB" ng-model="input" ng-change="searchActress(input)">
-                <!-- <label for="orderby">Order By:</label> -->
-            </div>
-            <ul class="list-group" ng-repeat="(key, value) in actressList">
-                <li class="list-group-item" ng-click="addActress(value)">{{key}}</li>
-            </ul>
+            <form class="search-box my-2">
+                <input type="text" class="bg-info text-dark form-control" placeholder="Search Actress in TMDB" ng-model="input" ng-change="searchActress(input)">
+                <div class="search-results list-group">
+                    <a href="#" class="list-group-item list-group-item-action" ng-repeat="(key, value) in actressList" ng-click="addActress(value)">{{key}}</a>
+                </div>
+            </form>
+
             <div class="input-group mb-5 mt-5">
                 <label id="search-label" class="bg-dark text-white form-control" for="orderby">Choose field to order by:</label>
                 <select class="bg-info text-dark form-control" name="orderby" ng-model="selectedName" ng-options="x for (x,y) in fields"
@@ -73,19 +72,18 @@
             </div>
         </div>
         <div ng-controller="moviesCtrl">
-            <div class="input-group mt-5">
+            <form class="search-box my-2">
                 <input type="text" class="bg-info text-dark form-control" placeholder="Search movie" ng-model="aFilter" ng-change="updateSearch(aFilter)">
-                <!-- <label for="orderby">Order By:</label> -->
-            </div>
-            <ul class="list-group" ng-repeat="(key, value) in listItems">
-                <li class="list-group-item" ng-click="addMovie(value)">{{key}}</li>
-            </ul>
+                <div class="search-results list-group">
+                    <a href="#" class="list-group-item list-group-item-action" ng-repeat="(key, value) in listItems" ng-click="addMovie(value)">{{key}}</a>
+                </div>
+            </form>
             <ul class="mt-5 list-unstyled" ng-repeat="movie in moviesArr">
                 <yg-movie></yg-movie>
             </ul>
         </div>
     </div>
-    <footer class="bg-dark text-white text-center pt-2 pb-2">by
+    <footer class="bg-dark text-white text-center pt-2 pb-2 mt-5">by
         <span class="text-primary">Yossi Glick</span>
     </footer>
 </body>

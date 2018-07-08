@@ -78,3 +78,13 @@ body {
 #inner_ul {
     list-style-type: none;
 }
+
+.search-box {
+    position: relative;
+  }
+  
+  .search-results {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+  }
