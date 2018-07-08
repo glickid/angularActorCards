@@ -66,14 +66,12 @@
         </div>
         <div ng-controller="moviesCtrl">
             <div class="input-group mt-5">
-                <input type="text" class="bg-info text-dark form-control" placeholder="Search movie" 
-                    ng-model="aFilter" on-change="updateSearch(afilter)">
+                <input type="text" class="bg-info text-dark form-control" placeholder="Search movie" ng-model="aFilter" 
+                    ng-change="updateSearch()">
                 <!-- <label for="orderby">Order By:</label> -->
             </div>
-            <ul class="list-group">
-                <li class="list-group-item">{{aFilter}}</li>
-                <li class="list-group-item">Second item</li>
-                <li class="list-group-item">Third item</li>
+            <ul class="list-group" ng-repeat="item in listItems">
+                <li class="list-group-item">{{item}}</li>
             </ul>
             <ul class="mt-5 list-unstyled" ng-repeat="movie in moviesArr track by $index">
                 <yg-movie></yg-movie>
