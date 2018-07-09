@@ -54,7 +54,7 @@ actorApp.controller("actorCtrl", function ($scope, actorService) {
 
     $scope.searchActress = function (input) {
         //start search only after 3 charachters of input
-        if (input.length > 3) {
+        if (input.length > 2) {
             $scope.actressList = {};
 
             actorService.searchActress(input, $scope.actressList).then(function (success) {
