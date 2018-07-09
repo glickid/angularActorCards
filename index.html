@@ -9,6 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
     <script src="actorApp.js"></script>
+    <script src="Min2HourStr.js"></script>
     <script src="actorCtrl.js"></script>
     <script src="moviesCtrl.js"></script>
     <script src="movieDrective.js"></script>
@@ -75,10 +76,11 @@
             <form class="search-box my-2">
                 <input type="text" class="bg-info text-dark form-control" placeholder="Search movie" ng-model="aFilter" ng-change="updateSearch(aFilter)">
                 <div class="search-results list-group">
-                    <a href="#" class="list-group-item list-group-item-action" ng-repeat="(key, value) in listItems" ng-click="addMovie(value)">{{key}}</a>
+                    <a class="list-group-item list-group-item-action" 
+                    ng-repeat="(key, value) in listItems" ng-click="addMovie(value)">{{key}}</a>
                 </div>
             </form>
-            <ul class="mt-5 list-unstyled" ng-repeat="movie in moviesArr">
+            <ul class="list-unstyled mb-0 mt-0 border-top" ng-repeat="movie in moviesArr">
                 <yg-movie></yg-movie>
             </ul>
         </div>

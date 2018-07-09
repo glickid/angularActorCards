@@ -1,10 +1,10 @@
 
-actorApp.controller("moviesCtrl", function ($scope, $http) {
+actorApp.controller("moviesCtrl", function ($scope, $http, min2HourStr) {
     var API_KEY = "bce8cf411be52423d49e88adaa634d4a";
 
     function Movie(name, length, actors, director, poster, imdbUrl, description) {
         this.name = name;
-        this.length = length.toString();
+        this.length = min2HourStr.convMin2HourStr(length); //toString();
         this.actors = actors
         this.director = director;
         this.imgUrl = "https://image.tmdb.org/t/p/w200/" + poster;

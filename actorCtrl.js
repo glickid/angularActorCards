@@ -1,13 +1,13 @@
 
-actorApp.controller("actorCtrl", function ($scope, $http) {
+actorApp.controller("actorCtrl", function ($scope, $http, $timeout) {
     var API_KEY = "bce8cf411be52423d49e88adaa634d4a";
 
     function Actor(fname, lname, bday, imageUrl, imdbUrl, text) {
         this.fname = fname;
         this.lname = lname
         this.bday = new Date(bday);
-        this.imgUrl = (imageUrl[0] === 'h') ? imageUrl : "https://image.tmdb.org/t/p/w200/" + imageUrl;
-        this.imdbUrl = (imdbUrl[0] === 'h') ? imdbUrl : "https://www.imdb.com/title/" + imdbUrl;;
+        this.imgUrl = (imageUrl) ? ((imageUrl[0] === 'h') ? imageUrl : "https://image.tmdb.org/t/p/w200" + imageUrl): "";
+        this.imdbUrl = (imdbUrl) ? ((imdbUrl[0] === 'h') ? imdbUrl : "https://www.imdb.com/title/" + imdbUrl):"";
         this.text = text;
     }
 
@@ -78,19 +78,22 @@ actorApp.controller("actorCtrl", function ($scope, $http) {
             $http.get(namesUrl).then(function (response) {
                 for (i = 0; i < response.data.results.length; i++) {
                     var actorId = response.data.results[i].id;
-                    var detailsUrl = " https://api.themoviedb.org/3/person/" + actorId + "?api_key=" + API_KEY + "&language=en-US";
-
-                    $http.get(detailsUrl).then(function (response1) {
-                        if (response1.data.gender === 1)
-                            $scope.actressList[response1.data.name] = response1.data.id;
-                    }, function (error) {
-                        console.log(error);
-                    })
+                    
+                    $timeout( function(actorId){
+                        var detailsUrl = " https://api.themoviedb.org/3/person/" + actorId + "?api_key=" + API_KEY + "&language=en-US";
+                        $http.get(detailsUrl).then(function (response1) {
+                            if (response1.data.gender === 1)
+                                $scope.actressList[response1.data.name] = response1.data.id;
+                        }, function (error) {
+                            console.log(error);
+                        })
+                    }, 200, [], actorId);
                 }
             }, function (error) {
                 console.log(error);
                 $scope.actressList = {};
             })
+            $scope.actressList = {};
         }
         else {
             $scope.actressList = {};
@@ -115,6 +118,7 @@ actorApp.controller("actorCtrl", function ($scope, $http) {
             $scope.actorArr.push(actress);
 
             $scope.actressList = {};
+            $scope.input = "";
         }, function (error) {
             console.log(error);
         })
