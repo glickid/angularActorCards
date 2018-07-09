@@ -1,12 +1,20 @@
 
 actorApp.controller("actorCtrl", function ($scope, actorService) {
-
-    $scope.actorArr = actorService.loadActors();
-
     $scope.aFilter = "";
     $scope.propName = "";
     $scope.reverse = false;
     $scope.fields = { "First Name": "fname", "Last Name": "lname", "Birth Date": "bday" };
+
+    function populateActors() {
+        actorService.loadActors().then(function (success) {
+            //do_nothing
+        }, function (error) {
+            console.log(error)
+        });
+    }
+
+    populateActors();
+    $scope.actorArr = actorService.getActorArr();
 
     //filter a spcific actor on the view
     $scope.actorFilter = function (actor) {

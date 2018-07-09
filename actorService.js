@@ -2,6 +2,7 @@
 actorApp.factory("actorService", function ($http, $log, $q, $timeout) {
 
     var actorArr = [];
+
     var API_KEY = "bce8cf411be52423d49e88adaa634d4a";
 
     function Actor(fname, lname, bday, imageUrl, imdbUrl, text) {
@@ -14,6 +15,8 @@ actorApp.factory("actorService", function ($http, $log, $q, $timeout) {
     }
 
     function loadActors() {
+        var async = $q.defer();
+
         $http.get("./actors.json").then(function (response) {
             //console.log(JSON.stringify(response));
             var dataArr = response["data"];
@@ -27,15 +30,20 @@ actorApp.factory("actorService", function ($http, $log, $q, $timeout) {
                     dataArr[i].text);
 
                 actorArr.push(actor_t);
+                async.resolve(actorArr);
                 // console.log(dataArr[i]);
             }
         }, function (error) {
             $log.error(JSON.stringify(error));
+            async.reject("failed to load actor.json");
         });
 
-        return actorArr;
+        return async.promise;
     }
 
+    function getActorArr () {
+        return actorArr;
+    }
 
     function addActress(id) {
 
@@ -58,7 +66,7 @@ actorApp.factory("actorService", function ($http, $log, $q, $timeout) {
 
         }, function (error) {
             $log.error(error);
-            async.reject("failed to load cars.json");
+            async.reject("failed to actor info");
         });
 
         return async.promise;
@@ -98,7 +106,8 @@ actorApp.factory("actorService", function ($http, $log, $q, $timeout) {
 
     return {
         loadActors: loadActors,
+        getActorArr : getActorArr,
         addActress: addActress,
         searchActress: searchActress
-    }
+    };
 });
