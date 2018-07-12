@@ -15,7 +15,8 @@ actorApp.factory("movieService", function ($http, $log, $q, $timeout, min2HourSt
 
     function addMovie(id, moviesArr) {
 
-        var theUrl = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + API_KEY + "&append_to_response=credits";
+        var theUrl = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + 
+                    API_KEY + "&append_to_response=credits";
         var async = $q.defer();
         // var moviesArr[];
 

@@ -7,9 +7,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script src="actorApp.js"></script>
     <script src="Min2HourStr.js"></script>
+    <script src="homeCtrl.js"></script>
     <script src="actorCtrl.js"></script>
     <script src="moviesCtrl.js"></script>
     <script src="movieDrective.js"></script>
@@ -19,75 +21,28 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="fixed-top row justify-content-center">
-            <div class="text-center ">
-                <h1 id="the-header" class="bg-warning text-center d-inline-block">
-                    <span class="text-primary">Beautiful</span> and
-                    <span class="text-danger">Sexiest</span> Actresses</h1>
-            </div>
-        </div>
-        <div ng-controller="actorCtrl">
-            <div class="input-group mb-5 mt-5">
-                <input type="text" class="bg-info text-dark form-control" placeholder="Search Actress in Gallery" ng-model="aFilter">
-                <!-- <label for="orderby">Order By:</label> -->
-            </div>
-            <form class="search-box my-2">
-                <input type="text" class="bg-info text-dark form-control" placeholder="Search Actress in TMDB" ng-model="input" ng-change="searchActress(input)">
-                <div class="search-results list-group">
-                    <a href="#" class="list-group-item list-group-item-action" ng-repeat="(key, value) in actressList" ng-click="addActress(value)">{{key}}</a>
-                </div>
-            </form>
-
-            <div class="input-group mb-5 mt-5">
-                <label id="search-label" class="bg-dark text-white form-control" for="orderby">Choose field to order by:</label>
-                <select class="bg-info text-dark form-control" name="orderby" ng-model="selectedName" ng-options="x for (x,y) in fields"
-                    ng-change="changeOrderBy(selectedName)">
-                    <option></option>
-                </select>
-                <!-- <p>{{selectedName}}</p> -->
-            </div>
-            <div class="row">
-                <div class="col-sm-6 col-md-3 d-flex align-items-stretch mb-2" ng-repeat="actor in actorArr | filter : actorFilter | orderBy: propName : reverse">
-                    <div class="card" ng-class="{'card-selected' : actor === chosenActor}" ng-mouseover="updateOverClass(actor)" ng-mouseleave="updateMouseLeave(actor)">
-                        <img alt="Card image cap " class="card-img-top img-fluid" ng-src={{actor.imgUrl}}>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <span ng-click="changeOrderBy('fname')">{{actor.fname+ " "}}</span>
-                                <span ng-click="changeOrderBy('lname')">{{actor.lname}}</span>
-                            </h4>
-                            <h5 ng-click="changeOrderBy('bday')"> Birthday {{actor.bday | date : dd.MM.y}}</h5>
-                            <a ng-href={{actor.imdbUrl}} target="new">IMDB CARD</a>
-                            <p class="card-text">{{actor.text}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="text-center ">
-                <h1 id="the-header" class="bg-warning text-center d-inline-block">
-                    The
-                    <span class="text-danger">MOVIES</span> Album</h1>
-            </div>
-        </div>
-        <div ng-controller="moviesCtrl">
-            <form class="search-box my-2">
-                <input type="text" class="bg-info text-dark form-control" placeholder="Search movie" ng-model="aFilter" ng-change="updateSearch(aFilter)">
-                <div class="search-results list-group">
-                    <a class="list-group-item list-group-item-action" 
-                    ng-repeat="(key, value) in listItems" ng-click="addMovie(value)">{{key}}</a>
-                </div>
-            </form>
-            <ul class="list-unstyled mb-0 mt-0 border-top" ng-repeat="movie in moviesArr">
-                <yg-movie></yg-movie>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#!/">Actresses & Movies Gallery</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#!/actresses">Acresses Gallery
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#!/moviesgallery">Movies Gallery</a>
+                </li>
             </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
         </div>
-    </div>
-    <footer class="bg-dark text-white text-center pt-2 pb-2 mt-5">by
+    </nav>
+
+    <ng-view></ng-view>
+
+    <footer class="fixed-bottom bg-dark text-white text-center pt-2 pb-2 mt-5">by
         <span class="text-primary">Yossi Glick</span>
     </footer>
 </body>

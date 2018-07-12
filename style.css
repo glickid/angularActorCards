@@ -4,6 +4,19 @@
     box-sizing: border-box;
 }
 
+.mt-100 {
+    margin-top: 100px;
+}
+.fixed {
+    position: fixed;
+    top : 50px;
+    width: 100%;
+    z-index: 2;
+}
+.icon-img {
+    max-width: 55px;
+}
+
 a:hover {
     cursor:pointer;
    }

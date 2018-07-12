@@ -3,9 +3,10 @@ actorApp.controller("actorCtrl", function ($scope, actorService) {
     $scope.aFilter = "";
     $scope.propName = "";
     $scope.reverse = false;
-    $scope.fields = { "First Name": "fname", "Last Name": "lname", "Birth Date": "bday" };
+    $scope.fields = { "First Name": "fname", "Last Name": "lname", "Birth Date": "bday" , "Added time":"addedAt"};
 
     function populateActors() {
+
         actorService.loadActors().then(function (success) {
             //do_nothing
         }, function (error) {
@@ -39,7 +40,8 @@ actorApp.controller("actorCtrl", function ($scope, actorService) {
         }
     }
 
-    $scope.changeOrderBy($scope.selectedName);
+//$scope.changeOrderBy($scope.selectedName);
+    $scope.changeOrderBy('-addedAt');
     $scope.chosenActor = "";
 
 
@@ -74,6 +76,7 @@ actorApp.controller("actorCtrl", function ($scope, actorService) {
             $scope.actorArr = actorArr;
             $scope.actressList = {};
             $scope.input = "";
+            changeOrderBy('-addedAt');
         }, function (error) {
             console.log("error")
         });

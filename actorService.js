@@ -12,10 +12,13 @@ actorApp.factory("actorService", function ($http, $log, $q, $timeout) {
         this.imgUrl = (imageUrl) ? ((imageUrl[0] === 'h') ? imageUrl : "https://image.tmdb.org/t/p/w200" + imageUrl) : "";
         this.imdbUrl = (imdbUrl) ? ((imdbUrl[0] === 'h') ? imdbUrl : "https://www.imdb.com/title/" + imdbUrl) : "";
         this.text = text;
+        this.addedAt = new Date().getTime() / 1000;
     }
 
     function loadActors() {
         var async = $q.defer();
+        
+        actorArr.splice(0, actorArr.length);
 
         $http.get("./actors.json").then(function (response) {
             //console.log(JSON.stringify(response));
@@ -29,7 +32,7 @@ actorApp.factory("actorService", function ($http, $log, $q, $timeout) {
                     dataArr[i].imdbUrl,
                     dataArr[i].text);
 
-                actorArr.push(actor_t);
+                actorArr.unshift(actor_t);
                 async.resolve(actorArr);
                 // console.log(dataArr[i]);
             }
