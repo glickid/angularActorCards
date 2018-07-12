@@ -64,7 +64,7 @@ actorApp.factory("actorService", function ($http, $log, $q, $timeout) {
                 response1.data.imdb_id,
                 (bioSplit.length > 2) ? bioSplit[0] + ". " + bioSplit[1] : response1.data.biography);
 
-            actorArr.push(actress);
+            actorArr.unshift(actress);
             async.resolve(actorArr);
 
         }, function (error) {

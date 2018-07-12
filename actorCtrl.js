@@ -3,7 +3,7 @@ actorApp.controller("actorCtrl", function ($scope, actorService) {
     $scope.aFilter = "";
     $scope.propName = "";
     $scope.reverse = false;
-    $scope.fields = { "First Name": "fname", "Last Name": "lname", "Birth Date": "bday" , "Added time":"addedAt"};
+    $scope.fields = { "First Name": "fname", "Last Name": "lname", "Birth Date": "bday" , "Last Added":"-addedAt"};
 
     function populateActors() {
 
@@ -33,7 +33,7 @@ actorApp.controller("actorCtrl", function ($scope, actorService) {
     //order gallery 
     $scope.changeOrderBy = function (prop) {
         if ($scope.propName === prop) {
-            $scope.reverse = !$scope.reverse;
+            $scope.reverse = !($scope.reverse);
         } else {
             $scope.reverse = false;
             $scope.propName = prop;
