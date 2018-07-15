@@ -104,7 +104,7 @@ actorApp.factory("movieService", function ($http, $log, $q, $timeout, min2HourSt
         Promise.all(premises).then(function (response) {
             var actors = [];
             var director = "";
-            var actorNum = (response[1].data.credits.cast.length > 5) ? 5 : response.data.credits.cast.length;
+            var actorNum = (response[1].data.credits.cast.length > 5) ? 5 : response[1].data.credits.cast.length;
 
             for (var i = 0; i < actorNum; i++) {
                 actors.push(response[1].data.credits.cast[i].name);
