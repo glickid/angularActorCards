@@ -3,8 +3,9 @@ actorApp.factory("movieService", function ($http, $log, $q, $timeout, min2HourSt
 
     var API_KEY = "bce8cf411be52423d49e88adaa634d4a";
 
-    function Movie(name, length, actors, director, poster, imdbUrl, description) {
+    function Movie(name, tmdbID, length, actors, director, poster, imdbUrl, description) {
         this.name = name;
+        this.tmdbID = tmdbID;
         this.length = min2HourStr.convMin2HourStr(length); //toString();
         this.actors = actors
         this.director = director;
@@ -13,12 +14,13 @@ actorApp.factory("movieService", function ($http, $log, $q, $timeout, min2HourSt
         this.text = description;
     }
 
-    function addMovie(id, moviesArr) {
+    var moviesArr = [];
 
-        var theUrl = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + 
-                    API_KEY + "&append_to_response=credits";
+    function addMovie(id) {
+
+        var theUrl = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" +
+            API_KEY + "&append_to_response=credits";
         var async = $q.defer();
-        // var moviesArr[];
 
         $http.get(theUrl).then(function (response) {
             var actors = [];
@@ -35,6 +37,7 @@ actorApp.factory("movieService", function ($http, $log, $q, $timeout, min2HourSt
             }
 
             var aMovie = new Movie(response.data.title,
+                response.data.id,
                 response.data.runtime,
                 actors,
                 director,
@@ -44,10 +47,10 @@ actorApp.factory("movieService", function ($http, $log, $q, $timeout, min2HourSt
 
             moviesArr.push(aMovie);
             async.resolve(moviesArr);
+
         }, function (error) {
             $log.log(error);
             async.reject("failed to get movie info");
-
         })
         return async.promise;
     }
@@ -75,8 +78,69 @@ actorApp.factory("movieService", function ($http, $log, $q, $timeout, min2HourSt
         return async.promise;
     }
 
+    function getMovieByID(tmdbID) {
+        for (var i = 0; i < moviesArr.length; i++) {
+            if (tmdbID === moviesArr[i].tmdbID)
+                return moviesArr[i];
+        }
+
+        return undefined;
+    }
+
+    function getMovieDetails(id, movieDetails) {
+        var detailsUrl = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" +
+            API_KEY + "&language=en-US";
+        var creditsUrl = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" +
+            API_KEY + "&append_to_response=credits";
+        var async = $q.defer();
+        // var moviesArr[];
+
+        //var savedDetails = getMovieByID(id);
+
+        var premises = [];
+        premises.push($http.get(detailsUrl));
+        premises.push($http.get(creditsUrl));
+
+        Promise.all(premises).then(function (response) {
+            var actors = [];
+            var director = "";
+            var actorNum = (response[1].data.credits.cast.length > 5) ? 5 : response.data.credits.cast.length;
+
+            for (var i = 0; i < actorNum; i++) {
+                actors.push(response[1].data.credits.cast[i].name);
+            }
+
+            for (var i = 0; i < response[1].data.credits.crew.length; i++) {
+                if (response[1].data.credits.crew[i].job === "Director")
+                    director = response[1].data.credits.crew[i].name;
+            }
+
+            movieDetails["name"] = response[0].data.title;
+            movieDetails["release_date"] = response[0].data.release_date;
+            movieDetails["imageUrl"] = "https://image.tmdb.org/t/p/w400" + response[0].data.poster_path;
+            movieDetails["actors"] = actors;
+            movieDetails["director"] = director;
+            movieDetails["length"] = min2HourStr.convMin2HourStr(response[1].data.runtime); //toString();
+            movieDetails["imdbURL"] = "https://www.imdb.com/title/" + response[0].data.imdb_id;
+            movieDetails["genre"] = response[0].data.genres[0].name;
+            movieDetails["popularity"] = response[0].data.popularity;
+            movieDetails["overview"] = response[0].data.overview;
+
+            async.resolve(movieDetails);
+        }, function (error) {
+            $log.log(error);
+            async.reject("failed to get movie info");
+        });
+        return async.promise;
+    }
+
+    function getMoviesArr () {
+        return moviesArr;
+    }
     return {
         addMovie: addMovie,
-        serachMovie: serachMovie
+        serachMovie: serachMovie,
+        getMovieDetails: getMovieDetails,
+        getMoviesArr : getMoviesArr
     };
 });

@@ -1,8 +1,10 @@
 
-actorApp.controller("moviesCtrl", function ($scope, movieService) {
+actorApp.controller("moviesCtrl", function ($scope, $location, movieService) {
 
-    $scope.moviesArr = [];
+   // $scope.moviesArr = [];
     $scope.listItems = {};
+
+    $scope.moviesArr = movieService.getMoviesArr();
 
     $scope.updateSearch = function (searchStr) {
 
@@ -22,11 +24,16 @@ actorApp.controller("moviesCtrl", function ($scope, movieService) {
         if (id != 0) {
             $scope.listItems = {};
 
-            movieService.addMovie(id, $scope.moviesArr).then(function (sucess) {
+            movieService.addMovie(id).then(function (success) {
+                $scope.moviesArr = success;
                 $scope.aFilter = "";
             }, function (error) {
                 console.log(error);
             })
         }
+    }
+
+    $scope.showMovieDetails = function (tmdbID) {
+        $location.path("/movies/" + tmdbID);
     }
 });

@@ -16,6 +16,10 @@ actorApp.config(function($routeProvider) {
         templateUrl : 'moviesGallery.html',
         controller : 'moviesCtrl'
     })
+    .when('/movies/:movieID', {
+        templateUrl : 'movieDetails.html',
+        controller : 'movieDetailsCtrl'
+    })
     .otherwise({redirectTo: '/'
     });
 });
