@@ -20,7 +20,7 @@ actorApp.factory("actorService", function ($http, $log, $q, $timeout) {
         
         actorArr.splice(0, actorArr.length);
 
-        $http.get("./actors.json").then(function (response) {
+        $http.get("/App/data/actors.json").then(function (response) {
             //console.log(JSON.stringify(response));
             var dataArr = response["data"];
             for (var i = 0; i < dataArr.length; i++) {

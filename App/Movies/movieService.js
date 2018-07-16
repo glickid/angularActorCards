@@ -55,6 +55,31 @@ actorApp.factory("movieService", function ($http, $log, $q, $timeout, min2HourSt
         return async.promise;
     }
 
+
+    function loadMovies() {
+        var async = $q.defer();
+
+        moviesArr.length = 0;
+
+        $http.get("/App/data/movies.json").then(function (response) {
+            //console.log(JSON.stringify(response));
+            var dataArr = response["data"];
+
+            for (var i = 0; i < dataArr.length; i++) {
+                $timeout(
+                    addMovie(dataArr[i].tmdbID),
+                    (300+i*100));
+            }
+            async.resolve(moviesArr);
+        }, function (error) {
+            $log.error(JSON.stringify(error));
+            async.reject("failed to load movies.json");
+        });
+
+        return async.promise;
+    }
+
+
     function serachMovie(searchStr, listItems) {
         var theUrl = "https://api.themoviedb.org/3/search/movie?api_key=" +
             API_KEY + "&language=en-US&query=" + searchStr + "&page=1&include_adult=false";
@@ -134,13 +159,14 @@ actorApp.factory("movieService", function ($http, $log, $q, $timeout, min2HourSt
         return async.promise;
     }
 
-    function getMoviesArr () {
+    function getMoviesArr() {
         return moviesArr;
     }
     return {
         addMovie: addMovie,
         serachMovie: serachMovie,
         getMovieDetails: getMovieDetails,
-        getMoviesArr : getMoviesArr
+        getMoviesArr: getMoviesArr,
+        loadMovies: loadMovies
     };
 });

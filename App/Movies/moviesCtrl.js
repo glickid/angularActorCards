@@ -4,6 +4,8 @@ actorApp.controller("moviesCtrl", function ($scope, $location, movieService) {
    // $scope.moviesArr = [];
     $scope.listItems = {};
 
+    movieService.loadMovies();
+    
     $scope.moviesArr = movieService.getMoviesArr();
 
     $scope.updateSearch = function (searchStr) {

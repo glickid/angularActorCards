@@ -9,15 +9,15 @@ actorApp.config(function($routeProvider) {
       controller : 'homeCtrl'
     })
     .when('/actresses', {
-        templateUrl : 'actresses.html',
+        templateUrl : 'App/Actor/actresses.html',
         controller : 'actorCtrl'
     })
     .when('/moviesgallery', {
-        templateUrl : 'moviesGallery.html',
+        templateUrl : 'App/Movies/moviesGallery.html',
         controller : 'moviesCtrl'
     })
     .when('/movies/:movieID', {
-        templateUrl : 'movieDetails.html',
+        templateUrl : 'App/Movies/movieDetails.html',
         controller : 'movieDetailsCtrl'
     })
     .otherwise({redirectTo: '/'
